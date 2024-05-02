@@ -35,8 +35,7 @@ unsigned int faStr1(const char *str) {
     return count;
 }
 
-unsigned int faStr2(const char *str)
-{
+unsigned int faStr2(const char *str) {
     unsigned int count = 0;
     bool inWord = false;
     for (; *str; ++str) {
