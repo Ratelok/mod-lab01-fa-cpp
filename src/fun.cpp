@@ -49,9 +49,9 @@ unsigned int faStr2(const char *str) {
         } else {
             if (!inWord) {
                 inWord = true;
-                startsWithUpper = isupper(*str);
+                startsWithUpper = isupper(*str) && (*str >= 'A' && *str <= 'Z');
             }
-            if (!islower(*str) && !startsWithUpper) {
+            if (!islower(*str) || (*str < 'a' || *str > 'z')) {
                 onlyLowercase = false;
             }
         }
