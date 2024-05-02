@@ -1,6 +1,9 @@
 // Copyright 2022 UNN-IASR
-#include <math.h>
-#include <ctype.h>
+#include <cstdio>
+#include <cctype>
+#include <cstring>
+#include <iostream>
+#include <string>
 
 unsigned int faStr1(const char *str) {
     unsigned int count = 0;
@@ -32,36 +35,28 @@ unsigned int faStr1(const char *str) {
     return count;
 }
 
-unsigned int faStr2(const char *str) {
+unsigned int faStr2(const char* str) {
     unsigned int count = 0;
     bool inWord = false;
-    bool startsWithUpper = false;
-    bool onlyLowercase = true;
-
-    while (*str != '\0') {
-        if (isspace(*str)) {
-            if (inWord && startsWithUpper && onlyLowercase) {
-                count++;
-            }
+    for (; *str; ++str) {
+        if (std::isspace(*str)) {
             inWord = false;
-            startsWithUpper = false;
-            onlyLowercase = true;
-        } else {
-            if (!inWord) {
-                inWord = true;
-                startsWithUpper = isupper(*str) && (*str >= 'A' && *str <= 'Z');
+        }
+        else if (!inWord) {
+            inWord = true;
+            bool startsWithUppercase = std::isupper(*str);
+            bool onlyLowercase = true;
+            for (const char* p = str + 1; !std::isspace(*p) && *p; ++p) {
+                if (!std::islower(*p)) {
+                    onlyLowercase = false;
+                    break;
+                }
             }
-            if (!islower(*str) || (*str < 'a' || *str > 'z')) {
-                onlyLowercase = false;
+            if (startsWithUppercase && onlyLowercase) {
+                ++count;
             }
         }
-        str++;
     }
-
-    if (inWord && startsWithUpper && onlyLowercase) {
-        count++;
-    }
-
     return count;
 }
 
